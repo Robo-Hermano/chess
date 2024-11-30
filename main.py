@@ -84,6 +84,7 @@ def game_loop():
   pygame.init()
   pygame.display.set_caption("2 player chess, stockfish coming soon")
   screen = pygame.display.set_mode((640, 740))
+  screen.fill((150, 75, 0))
   BLACK = (0,0,0)
   WHITE = (255, 255, 255)
   squareIsWhite = 1 #if 1, paint square white; if -1, paint square black
