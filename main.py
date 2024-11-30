@@ -79,3 +79,18 @@ class King(Piece):
 
   def castling(self, position):
     pass
+
+def game_loop():
+  pygame.init()
+  pygame.display.set_caption("2 player chess, stockfish coming soon")
+  screen = pygame.display.set_mode((640, 740))
+  BLACK = (0,0,0)
+  WHITE = (255, 255, 255)
+  squareIsWhite = 1 #if 1, paint square white; if -1, paint square black
+  for i in range(100, 741, 80):
+    for j in range(0, 641, 80):
+      if squareIsWhite == 1:
+        pygame.draw.rect(screen, WHITE, (j, i, 80, 80))
+      else:
+        pygame.draw.rect(screen, BLACK, (j, i, 80, 80))
+      squareIsWhite /= -1 #so that value switches between 1 and -1, therefore black square drawn after white square and vice versa
