@@ -156,7 +156,7 @@ def game_loop(pieceList):
   pygame.init()
   pygame.display.set_caption("2 player chess, stockfish coming soon")
   screen = pygame.display.set_mode((640, 640))
-  BLACK = (0,0,0)
+  BROWN = (137, 81, 41)
   WHITE = (255, 255, 255)
   loop = True
   while loop:
@@ -167,7 +167,7 @@ def game_loop(pieceList):
         if squareIsWhite == 1:
           pygame.draw.rect(screen, WHITE, (j, i, 80, 80))
         else:
-          pygame.draw.rect(screen, BLACK, (j, i, 80, 80))
+          pygame.draw.rect(screen, BROWN, (j, i, 80, 80))
         squareIsWhite /= -1 #so value switches every time between white square and black square
     print_positions(pieceList, screen)
     for event in pygame.event.get():
