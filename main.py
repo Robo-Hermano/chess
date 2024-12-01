@@ -22,7 +22,7 @@ class Pawn(Piece):
   def __init__(self, position, image):
     self.val = 1
     self.position = position
-    self.image = pygame.transform.scale(40, 40)
+    self.image = pygame.transform.scale(image, (40, 40))
 
   def movement(self, position):
     pass #slightly more complicated
