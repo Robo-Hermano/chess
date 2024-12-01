@@ -37,7 +37,7 @@ class Knight(Piece):
   def __init__(self, position, image):
     self.val = 3
     self.position = position 
-    self.image = pygame.transform.scale(40, 40)
+    self.image = pygame.transform.scale(image, (40, 40))
 
   def movement(self, position):
     if abs(position[0] - self.position[0]) == 2 and abs(position[1] - self.position[1]) == 1 or abs(position[1] - self.position[1]) == 2 and abs(position[0] - self.position[0]) == 1:
@@ -47,8 +47,8 @@ class Bishop(Piece):
   def __init__(self, position, image):
     self.val = 3
     self.position = position
-    self.image = pygame.transform.scale(40, 40)
-
+    self.image = pygame.transform.scale(image, (40, 40))
+    
   def movement(self, position):
     if abs(position[0] - self.position[0]) == abs(position[1] - self.position[1]):
       self.position = position
@@ -57,7 +57,7 @@ class Rook(Piece):
   def __init__(self, position, image):
     self.val = 5
     self.position = position
-    self.image = pygame.transform.scale(40, 40)
+    self.image = pygame.transform.scale(image, (40, 40))
 
   def movement(self, position):
     if position[0] == self.position[0] or position[1] == self.position[1]:
@@ -67,7 +67,7 @@ class Queen(Piece):
   def __init__(self, position, image):
     self.val = 9
     self.position = position
-    self.image = pygame.transform.scale(40, 40)
+    self.image = pygame.transform.scale(image, (40, 40))
 
   def movement(self, position):
     if abs(position[0] - self.position[0]) == abs(position[1] - self.position[1]) or position[0] == self.position[0] or position[1] == self.position[1]:
@@ -77,7 +77,7 @@ class King(Piece):
   def __init__(self, position, image):
     self.val = 0
     self.position = position
-    self.image = pygame.transform.scale(40, 40)
+    self.image = pygame.transform.scale(image, (40, 40))
 
   def movement(self, position):
     if abs(self.position[0] - position[0]) <= 1 and abs(self.position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
