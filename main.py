@@ -83,7 +83,7 @@ class King(Piece):
     pass
 
 pawnImgWhite = pygame.image.load("white_pawn.jpg")
-pawnImgBlack = pygame.image.load("black_pawn.webp")
+pawnImgBlack = pygame.image.load("black_pawn.png")
 
 def game_loop():
   pygame.init()
