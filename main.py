@@ -14,6 +14,8 @@ numberToLetter = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h"
 class Piece:
   def get_captured(self):
     self.position = (-1,-1)
+  def print_on_board(self):
+    pass
 
 class Pawn(Piece):
   def __init__(self, position):
@@ -79,6 +81,9 @@ class King(Piece):
 
   def castling(self, position):
     pass
+
+pawnImgWhite = pygame.image.load("white_pawn.jpg")
+pawnImgBlack = pygame.image.load("black_pawn.webp")
 
 def game_loop():
   pygame.init()
