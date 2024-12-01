@@ -150,7 +150,7 @@ pieceList = [WhitePawnOne, WhitePawnTwo, WhitePawnThree, WhitePawnFour, WhitePaw
 def print_positions(pieceList, screen):
   for piece in pieceList:
     position = piece.get_position()
-    screen.blit(piece.image, ((position[0]-1)*80, (position[1]-1)*80)
+    screen.blit(piece.image, ((position[0]-1)*80, (position[1]-1)*80))
 
 def game_loop(pieceList):
   pygame.init()
