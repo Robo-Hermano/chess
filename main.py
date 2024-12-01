@@ -115,6 +115,13 @@ WhitePawnSeven = Pawn((7,7),"white_pawn.png")
 WhitePawnEight = Pawn((8,7),"white_pawn.png")
 WhiteRookOne = Rook((1,8), "white_rook.png")
 WhiteRookTwo = Rook((8,8), "white_rook.png")
+WhiteKnightOne = Knight((2,8), "white_knight.png")
+WhiteKnightTwo = Knight((7,8), "white_knight.png")
+WhiteBishopOne = Bishop((3,8), "white_bishop.png")
+WhiteBishopTwo = Bishop((6,8), "white_bishop.png")
+WhiteQueen = Queen((4,8), "white_queen.png")
+WhiteKing = King((5,8), "white_king.png")
+
 BlackPawnOne = Pawn((1,2),"black_pawn.png")
 BlackPawnTwo = Pawn((2,2),"black_pawn.png")
 BlackPawnThree = Pawn((3,2),"black_pawn.png")
@@ -123,6 +130,16 @@ BlackPawnFive = Pawn((5,2),"black_pawn.png")
 BlackPawnSix = Pawn((6,2),"black_pawn.png")
 BlackPawnSeven = Pawn((7,2),"black_pawn.png")
 BlackPawnEight = Pawn((8,2),"black_pawn.png")
+BlackRookOne = Rook((1,1), "black_rook.png")
+BlackRookTwo = Rook((8,1), "black_rook.png")
+BlackKnightOne = Knight((2,1), "black_knight.png")
+BlackKnightTwo = Knight((7,1), "black_knight.png")
+BlackBishopOne = Bishop((3,1), "black_bishop.png")
+BlackBishopTwo = Bishop((6,1), "black_bishop.png")
+BlackQueen = Queen((4,1), "black_queen.png")
+BlackKing = King((5,1), "black_king.png")
+
+
 
 def game_loop():
   pygame.init()
@@ -133,7 +150,7 @@ def game_loop():
   loop = True
   while loop:
     squareIsWhite = 1 #if 1, paint square white; if -1, paint square black
-    pygame.time.Clock.tick(10)
+    pygame.time.Clock().tick(10)
     for i in range(0, 641, 80):
       for j in range(0, 641, 80):
         if squareIsWhite == 1:
