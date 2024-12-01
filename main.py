@@ -101,5 +101,5 @@ def game_loop():
       if event.type == pygame.QUIT:
         loop = False
     pygame.display.update()
-
+  pygame.quit()
 game_loop()
