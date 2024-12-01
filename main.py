@@ -12,10 +12,15 @@ letterToNumber = {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6, "g": 7, "h": 8
 numberToLetter = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h"}
 
 class Piece:
+  def __init__(self, image):
+    self.image = image
+    
   def get_captured(self):
     self.position = (-1,-1)
+    
   def print_on_board(self):
     pass
+    
   def get_position(self):
     return self.position
 
@@ -86,6 +91,13 @@ class King(Piece):
 
 pawnImgWhite = pygame.image.load("white_pawn.jpg")
 pawnImgBlack = pygame.image.load("black_pawn.png")
+rookImgWhite = pygame.image.load("white_rook.png")
+rookImgBlack = pygame.image.load("black_rook.png")
+knightImgWhite = pygame.image.load("white_knight.png")
+knightImgBlack = pygame.image.load("black_knight.png")
+bishopImgWhite = pygame.image.load("white_bishop.png")
+bishopImgBlack = pygame.image.load("black_bishop.png")
+queenImgWhite = 
 
 def game_loop():
   pygame.init()
