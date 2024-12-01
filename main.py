@@ -139,7 +139,10 @@ BlackBishopTwo = Bishop((6,1), "black_bishop.png")
 BlackQueen = Queen((4,1), "black_queen.png")
 BlackKing = King((5,1), "black_king.png")
 
-
+WhitePromotionOne = None
+WhitePromotionTwo = None
+BlackPromotionOne = None
+BlackPromotionTwo = None
 
 def game_loop():
   pygame.init()
