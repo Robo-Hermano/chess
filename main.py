@@ -16,6 +16,8 @@ class Piece:
     self.position = (-1,-1)
   def print_on_board(self):
     pass
+  def get_position(self):
+    return self.position
 
 class Pawn(Piece):
   def __init__(self, position):
