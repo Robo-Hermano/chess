@@ -92,7 +92,7 @@ class King(Piece):
   def castling(self, position):
     pass
 
-pawnImgWhite = pygame.image.load("white_pawn.jpg")
+pawnImgWhite = pygame.image.load("white_pawn.png")
 pawnImgBlack = pygame.image.load("black_pawn.png")
 rookImgWhite = pygame.image.load("white_rook.png")
 rookImgBlack = pygame.image.load("black_rook.png")
@@ -104,6 +104,25 @@ queenImgWhite = pygame.image.load("white_queen.png")
 queenImgBlack = pygame.image.load("black_queen.png")
 kingImgWhite = pygame.image.load("white_king.png")
 kingImgBlack = pygame.image.load("black_king.png")
+
+WhitePawnOne = Pawn((1,7),"white_pawn.png")
+WhitePawnTwo = Pawn((2,7),"white_pawn.png")
+WhitePawnThree = Pawn((3,7),"white_pawn.png")
+WhitePawnFour = Pawn((4,7),"white_pawn.png")
+WhitePawnFive = Pawn((5,7),"white_pawn.png")
+WhitePawnSix = Pawn((6,7),"white_pawn.png")
+WhitePawnSeven = Pawn((7,7),"white_pawn.png")
+WhitePawnEight = Pawn((8,7),"white_pawn.png")
+WhiteRookOne = Rook((1,8), "white_rook.png")
+WhiteRookTwo = Rook((8,8), "white_rook.png")
+BlackPawnOne = Pawn((1,2),"black_pawn.png")
+BlackPawnTwo = Pawn((2,2),"black_pawn.png")
+BlackPawnThree = Pawn((3,2),"black_pawn.png")
+BlackPawnFour = Pawn((4,2),"black_pawn.png")
+BlackPawnFive = Pawn((5,2),"black_pawn.png")
+BlackPawnSix = Pawn((6,2),"black_pawn.png")
+BlackPawnSeven = Pawn((7,2),"black_pawn.png")
+BlackPawnEight = Pawn((8,2),"black_pawn.png")
 
 def game_loop():
   pygame.init()
