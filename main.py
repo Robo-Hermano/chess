@@ -147,10 +147,10 @@ pieceList = [WhitePawnOne, WhitePawnTwo, WhitePawnThree, WhitePawnFour, WhitePaw
              BlackRookOne, BlackRookTwo, BlackKnightOne, BlackKnightTwo, BlackBishopOne, BlackBishopTwo, BlackQueen, BlackKing
             ]
 
-def print_positions(pieceList):
+def print_positions(pieceList, screen):
   for piece in pieceList:
     position = piece.get_position()
-    
+    screen.blit(piece.image, ((position[0]-1)*80, (position[1]-1)*80)
 
 def game_loop(pieceList):
   pygame.init()
@@ -169,7 +169,7 @@ def game_loop(pieceList):
         else:
           pygame.draw.rect(screen, BLACK, (j, i, 80, 80))
         squareIsWhite /= -1 #so value switches every time between white square and black square
-    print_positions(pieceList)
+    print_positions(pieceList, screen)
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         loop = False
