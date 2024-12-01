@@ -97,7 +97,10 @@ knightImgWhite = pygame.image.load("white_knight.png")
 knightImgBlack = pygame.image.load("black_knight.png")
 bishopImgWhite = pygame.image.load("white_bishop.png")
 bishopImgBlack = pygame.image.load("black_bishop.png")
-queenImgWhite = 
+queenImgWhite = pygame.image.load("white_queen.png")
+queenImgBlack = pygame.image.load("black_queen.png")
+kingImgWhite = pygame.image.load("white_king.png")
+kingImgBlack = pygame.image.load("black_king.png")
 
 def game_loop():
   pygame.init()
