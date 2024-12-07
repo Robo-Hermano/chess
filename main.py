@@ -1,4 +1,5 @@
 import pygame
+#note to self: change the game from fps to turn based
 
 def create_chess_position_board():
   chessBoard = []
