@@ -111,39 +111,39 @@ queenImgBlack = pygame.image.load("black_queen.png")
 kingImgWhite = pygame.image.load("white_king.png")
 kingImgBlack = pygame.image.load("black_king.png")
 
-WhitePawnOne = Pawn((1,7),pawnImgWhite)
-WhitePawnTwo = Pawn((2,7),pawnImgWhite)
-WhitePawnThree = Pawn((3,7),pawnImgWhite)
-WhitePawnFour = Pawn((4,7),pawnImgWhite)
-WhitePawnFive = Pawn((5,7),pawnImgWhite)
-WhitePawnSix = Pawn((6,7),pawnImgWhite)
-WhitePawnSeven = Pawn((7,7),pawnImgWhite)
-WhitePawnEight = Pawn((8,7),pawnImgWhite)
-WhiteRookOne = Rook((1,8), rookImgWhite)
-WhiteRookTwo = Rook((8,8), rookImgWhite)
-WhiteKnightOne = Knight((2,8),knightImgWhite)
-WhiteKnightTwo = Knight((7,8),knightImgWhite)
-WhiteBishopOne = Bishop((3,8), bishopImgWhite)
-WhiteBishopTwo = Bishop((6,8), bishopImgWhite)
-WhiteQueen = Queen((4,8), queenImgWhite)
-WhiteKing = King((5,8), kingImgWhite)
+WhitePawnOne = Pawn((1,7),pawnImgWhite, "white")
+WhitePawnTwo = Pawn((2,7),pawnImgWhite, "white")
+WhitePawnThree = Pawn((3,7),pawnImgWhite, "white")
+WhitePawnFour = Pawn((4,7),pawnImgWhite, "white")
+WhitePawnFive = Pawn((5,7),pawnImgWhite, "white")
+WhitePawnSix = Pawn((6,7),pawnImgWhite, "white")
+WhitePawnSeven = Pawn((7,7),pawnImgWhite, "white")
+WhitePawnEight = Pawn((8,7),pawnImgWhite, "white")
+WhiteRookOne = Rook((1,8), rookImgWhite, "white")
+WhiteRookTwo = Rook((8,8), rookImgWhite, "white")
+WhiteKnightOne = Knight((2,8),knightImgWhite, "white")
+WhiteKnightTwo = Knight((7,8),knightImgWhite, "white")
+WhiteBishopOne = Bishop((3,8), bishopImgWhite, "white")
+WhiteBishopTwo = Bishop((6,8), bishopImgWhite, "white")
+WhiteQueen = Queen((4,8), queenImgWhite, "white")
+WhiteKing = King((5,8), kingImgWhite, "white")
 
-BlackPawnOne = Pawn((1,2),pawnImgBlack)
-BlackPawnTwo = Pawn((2,2),pawnImgBlack)
-BlackPawnThree = Pawn((3,2),pawnImgBlack)
-BlackPawnFour = Pawn((4,2),pawnImgBlack)
-BlackPawnFive = Pawn((5,2),pawnImgBlack)
-BlackPawnSix = Pawn((6,2),pawnImgBlack)
-BlackPawnSeven = Pawn((7,2),pawnImgBlack)
-BlackPawnEight = Pawn((8,2),pawnImgBlack)
-BlackRookOne = Rook((1,1),rookImgBlack)
-BlackRookTwo = Rook((8,1),rookImgBlack)
-BlackKnightOne = Knight((2,1),knightImgBlack)
-BlackKnightTwo = Knight((7,1),knightImgBlack)
-BlackBishopOne = Bishop((3,1),bishopImgBlack)
-BlackBishopTwo = Bishop((6,1),bishopImgBlack)
-BlackQueen = Queen((4,1),queenImgBlack)
-BlackKing = King((5,1),kingImgBlack)
+BlackPawnOne = Pawn((1,2),pawnImgBlack, "black")
+BlackPawnTwo = Pawn((2,2),pawnImgBlack, "black")
+BlackPawnThree = Pawn((3,2),pawnImgBlack, "black")
+BlackPawnFour = Pawn((4,2),pawnImgBlack, "black")
+BlackPawnFive = Pawn((5,2),pawnImgBlack, "black")
+BlackPawnSix = Pawn((6,2),pawnImgBlack, "black")
+BlackPawnSeven = Pawn((7,2),pawnImgBlack, "black")
+BlackPawnEight = Pawn((8,2),pawnImgBlack, "black")
+BlackRookOne = Rook((1,1),rookImgBlack, "black")
+BlackRookTwo = Rook((8,1),rookImgBlack, "black")
+BlackKnightOne = Knight((2,1),knightImgBlack, "black")
+BlackKnightTwo = Knight((7,1),knightImgBlack, "black")
+BlackBishopOne = Bishop((3,1),bishopImgBlack, "black")
+BlackBishopTwo = Bishop((6,1),bishopImgBlack, "black")
+BlackQueen = Queen((4,1),queenImgBlack, "black")
+BlackKing = King((5,1),kingImgBlack, "black")
 
 WhitePromotionOne = None
 WhitePromotionTwo = None
@@ -159,7 +159,18 @@ pieceList =[ WhitePawnOne, WhitePawnTwo, WhitePawnThree, WhitePawnFour, WhitePaw
 def print_positions(pieceList, screen):
   for piece in pieceList:
     position = piece.get_position()
-    screen.blit(piece.image, ((position[0]-1)*80, (position[1]-1)*80))
+    if position != (-1, -1):
+      screen.blit(piece.image, ((position[0]-1)*80, (position[1]-1)*80))
+
+def take_turn(turn_colour):
+  if turn == 1:
+    turn = "white"
+  else:
+    turn = "black"
+  #1. command for choosing piece
+  #2. checking if this is valid, if it's that colour's turn and if that piece can move there
+  #3. handle pieces getting captured
+  #4. extra stuff for pawns come last
 
 def game_loop(pieceList):
   pygame.init()
@@ -168,6 +179,7 @@ def game_loop(pieceList):
   BROWN = (137, 81, 41)
   WHITE = (255, 255, 255)
   loop = True
+  turn = 1
   while loop:
     squareIsWhite = 1 #if 1, paint square white; if -1, paint square black
     pygame.time.Clock().tick(10)
@@ -179,6 +191,8 @@ def game_loop(pieceList):
           pygame.draw.rect(screen, BROWN, (j, i, 80, 80))
         squareIsWhite /= -1 #so value switches every time between white square and black square
     print_positions(pieceList, screen)
+    take_turn(turn_colour)
+    turn /= -1
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         loop = False
