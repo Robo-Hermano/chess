@@ -18,10 +18,14 @@ class Piece:
   def get_position(self):
     return self.position
 
+  def get_colour(self):
+    return self.colour
+
 class Pawn(Piece):
-  def __init__(self, position, image):
+  def __init__(self, position, image, colour):
     self.val = 1
     self.position = position
+    self.colour = colour
     self.image = pygame.transform.scale(image,(80, 80))
 
   def movement(self, position):
@@ -34,8 +38,9 @@ class Pawn(Piece):
     pass
     
 class Knight(Piece):
-  def __init__(self, position, image):
+  def __init__(self, position, image, colour§):
     self.val = 3
+    self.colour
     self.position = position 
     self.image = pygame.transform.scale(image, (80, 80))
 
@@ -44,8 +49,9 @@ class Knight(Piece):
       self.position = position
     
 class Bishop(Piece):
-  def __init__(self, position, image):
+  def __init__(self, position, image, colour):
     self.val = 3
+    self.colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
     
@@ -54,8 +60,9 @@ class Bishop(Piece):
       self.position = position
 
 class Rook(Piece):
-  def __init__(self, position, image):
+  def __init__(self, position, image, colour):
     self.val = 5
+    self.colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
 
@@ -64,8 +71,9 @@ class Rook(Piece):
       self.position = position
 
 class Queen(Piece):
-  def __init__(self, position, image):
+  def __init__(self, position, image, colour):
     self.val = 9
+    self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
 
@@ -74,8 +82,9 @@ class Queen(Piece):
       self.position = position
       
 class King(Piece):
-  def __init__(self, position, image):
+  def __init__(self, position, image, colour):
     self.val = 0
+    self.colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
 
