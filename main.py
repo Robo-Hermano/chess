@@ -13,20 +13,20 @@ numberToLetter = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h"
 
 class Piece:
   def get_captured(self):
-    self.position = (-1,-1)
+    self.position = (-1,-1) #so that the piece won't get printed after getting captured
     
   def get_position(self):
-    return self.position
+    return self.position #for printing position on board
 
   def get_colour(self):
-    return self.colour
+    return self.colour #so that white player can't move black pieces and vice versa
 
 class Pawn(Piece):
   def __init__(self, position, image, colour):
     self.val = 1
     self.position = position
     self.colour = colour
-    self.image = pygame.transform.scale(image,(80, 80))
+    self.image = pygame.transform.scale(image,(80, 80)) #so image can be printed on the gui
 
   def movement(self, position):
     pass #slightly more complicated
@@ -98,6 +98,7 @@ class King(Piece):
   def castling(self, position):
     pass
 
+#adjusting images so that they can be loaded into pygame
 pawnImgWhite = pygame.image.load("white_pawn.png")
 pawnImgBlack = pygame.image.load("black_pawn.png")
 rookImgWhite = pygame.image.load("white_rook.png")
@@ -111,6 +112,7 @@ queenImgBlack = pygame.image.load("black_queen.png")
 kingImgWhite = pygame.image.load("white_king.png")
 kingImgBlack = pygame.image.load("black_king.png")
 
+#initialising every piece
 WhitePawnOne = Pawn((1,7),pawnImgWhite, "white")
 WhitePawnTwo = Pawn((2,7),pawnImgWhite, "white")
 WhitePawnThree = Pawn((3,7),pawnImgWhite, "white")
@@ -145,6 +147,7 @@ BlackBishopTwo = Bishop((6,1),bishopImgBlack, "black")
 BlackQueen = Queen((4,1),queenImgBlack, "black")
 BlackKing = King((5,1),kingImgBlack, "black")
 
+#incase pawns promote
 WhitePromotionOne = None
 WhitePromotionTwo = None
 BlackPromotionOne = None
