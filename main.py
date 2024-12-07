@@ -38,7 +38,7 @@ class Pawn(Piece):
     pass
     
 class Knight(Piece):
-  def __init__(self, position, image, colour§):
+  def __init__(self, position, image, colour):
     self.val = 3
     self.colour
     self.position = position 
@@ -179,7 +179,7 @@ def game_loop(pieceList):
   BROWN = (137, 81, 41)
   WHITE = (255, 255, 255)
   loop = True
-  turn = 1
+  turn_colour = 1
   while loop:
     squareIsWhite = 1 #if 1, paint square white; if -1, paint square black
     pygame.time.Clock().tick(10)
@@ -192,7 +192,7 @@ def game_loop(pieceList):
         squareIsWhite /= -1 #so value switches every time between white square and black square
     print_positions(pieceList, screen)
     take_turn(turn_colour)
-    turn /= -1
+    turn_colour /= -1
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         loop = False
