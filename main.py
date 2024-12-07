@@ -40,7 +40,7 @@ class Pawn(Piece):
 class Knight(Piece):
   def __init__(self, position, image, colour):
     self.val = 3
-    self.colour
+    self.colour = colour
     self.position = position 
     self.image = pygame.transform.scale(image, (80, 80))
 
@@ -51,7 +51,7 @@ class Knight(Piece):
 class Bishop(Piece):
   def __init__(self, position, image, colour):
     self.val = 3
-    self.colour
+    self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
     
@@ -62,7 +62,7 @@ class Bishop(Piece):
 class Rook(Piece):
   def __init__(self, position, image, colour):
     self.val = 5
-    self.colour
+    self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
 
@@ -84,7 +84,7 @@ class Queen(Piece):
 class King(Piece):
   def __init__(self, position, image, colour):
     self.val = 0
-    self.colour
+    self.colour =  colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
 
@@ -163,10 +163,10 @@ def print_positions(pieceList, screen):
       screen.blit(piece.image, ((position[0]-1)*80, (position[1]-1)*80))
 
 def take_turn(turn_colour):
-  if turn == 1:
-    turn = "white"
+  if turn_colour == 1:
+    turn_colour = "white"
   else:
-    turn = "black"
+    turn_colour = "black"
   #1. command for choosing piece
   #2. checking if this is valid, if it's that colour's turn and if that piece can move there
   #3. handle pieces getting captured
