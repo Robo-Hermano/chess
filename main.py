@@ -166,12 +166,16 @@ def print_positions(pieceList, screen):
     if position != (-1, -1):
       screen.blit(piece.image, ((position[0]-1)*80, (position[1]-1)*80))
 
-def take_turn(turn_colour, mousePosition, pieceChosen):
-  if turn_colour == 1:
-    turn_colour = "white"
+def take_turn(turCcolour, mousePosition, pieceChosen, pieceList):
+  if turnColour == 1:
+    turnColour = "white"
   else:
-    turn_colour = "black"
-  #1. command for choosing piece
+    turnColour = "black"
+  chosenSquare = (mousePosition[0]//80*80, mousePosition[1]//80*80)
+  for piece in pieceList:
+    if piece.get_position() == chosenSquare and piece.get_colour() == turnColour:
+      pieceChosen = piece
+  
   #2. checking if this is valid, if it's that colour's turn and if that piece can move there
   #3. handle pieces getting captured
   #4. extra stuff for pawns come last
@@ -183,7 +187,7 @@ def game_loop(pieceList):
   BROWN = (137, 81, 41)
   WHITE = (255, 255, 255)
   loop = True
-  turn_colour = 1
+  turnColour = 1
   pieceChosen = None
   while loop:
     squareIsWhite = 1 #if 1, paint square white; if -1, paint square black
@@ -201,8 +205,8 @@ def game_loop(pieceList):
         loop = False
       elif event.type == pygame.MOUSEBUTTONUP:
         pos = pygame.mouse.get_pos()
-        pieceChosen = take_turn(turn_colour, pos, pieceChosen)
+        pieceChosen = take_turn(turnColour, pos, pieceChosen, pieceList)
     pygame.display.update()
-    turn_colour /= -1
+    turnColour /= -1
   pygame.quit()
 game_loop(pieceList)
