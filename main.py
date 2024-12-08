@@ -170,7 +170,6 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
   else:
     turnColour = "black"
   chosenSquare = (mousePosition[0]//80+1, mousePosition[1]//80+1)
-  print(chosenSquare)
   for piece in pieceList:
     if piece.get_position() == chosenSquare and piece.get_colour() == turnColour:
       pieceChosen = piece
@@ -197,6 +196,7 @@ def game_loop(pieceList):
   turnColour = 1
   pieceChosen = None
   while loop:
+    screen.fill(WHITE)
     squareIsWhite = 1 #if 1, paint square white; if -1, paint square black
     pygame.time.Clock().tick(10)
     for i in range(0, 641, 80):
@@ -213,7 +213,6 @@ def game_loop(pieceList):
       elif event.type == pygame.MOUSEBUTTONUP:
         pos = pygame.mouse.get_pos()
         pieceChosen, pieceList, turnColour = take_turn(turnColour, pos, pieceChosen, pieceList)
-        print(pieceChosen)
     pygame.display.update()
   pygame.quit()
 game_loop(pieceList)
