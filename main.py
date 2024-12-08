@@ -175,7 +175,7 @@ def print_positions(pieceList, screen):
     if position != (-1, -1):
       screen.blit(piece.image, ((position[0]-1)*80, (position[1]-1)*80))
 
-def take_turn(turCcolour, mousePosition, pieceChosen, pieceList):
+def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
   if turnColour == 1:
     turnColour = "white"
   else:
