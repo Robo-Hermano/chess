@@ -194,10 +194,8 @@ def take_turn(turCcolour, mousePosition, pieceChosen, pieceList):
     return None
   except:
     return None
-  
-  #2. checking if this is valid, if it's that colour's turn and if that piece can move there
-  #3. handle pieces getting captured
-  #4. extra stuff for pawns come last
+  #debugging
+  #bonus movement for pawns and kings
 
 def game_loop(pieceList):
   pygame.init()
