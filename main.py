@@ -174,13 +174,11 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
   for piece in pieceList:
     if piece.get_position() == chosenSquare and piece.get_colour() == turnColour:
       pieceChosen = piece
-      print(pieceChosen.get_position())
       return pieceChosen, pieceList, colourToNumber[turnColour]
   try:    
     pieceChosen.movement(chosenSquare)
     for piece in pieceList:
       if piece.get_position() == chosenSquare and piece.get_colour() != turnColour:
-        print(turnColour, piece.get_colour())
         piece.get_captured()
     turnColour = colourToNumber[turnColour]
     turnColour /= -1
