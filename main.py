@@ -48,6 +48,8 @@ class Knight(Piece):
   def movement(self, position):
     if abs(position[0] - self.position[0]) == 2 and abs(position[1] - self.position[1]) == 1 or abs(position[1] - self.position[1]) == 2 and abs(position[0] - self.position[0]) == 1:
       self.position = position
+    else:
+      raise ValueError()
     
 class Bishop(Piece):
   def __init__(self, position, image, colour):
@@ -59,6 +61,8 @@ class Bishop(Piece):
   def movement(self, position):
     if abs(position[0] - self.position[0]) == abs(position[1] - self.position[1]):
       self.position = position
+    else:
+      raise ValueError()
 
 class Rook(Piece):
   def __init__(self, position, image, colour):
@@ -70,6 +74,8 @@ class Rook(Piece):
   def movement(self, position):
     if position[0] == self.position[0] or position[1] == self.position[1]:
       self.position = position
+    else:
+      raise ValueError()
 
 class Queen(Piece):
   def __init__(self, position, image, colour):
@@ -81,6 +87,8 @@ class Queen(Piece):
   def movement(self, position):
     if abs(position[0] - self.position[0]) == abs(position[1] - self.position[1]) or position[0] == self.position[0] or position[1] == self.position[1]:
       self.position = position
+    else:
+      raise ValueError()
       
 class King(Piece):
   def __init__(self, position, image, colour):
@@ -92,6 +100,8 @@ class King(Piece):
   def movement(self, position):
     if abs(self.position[0] - position[0]) <= 1 and abs(self.position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
       self.position = position
+    else:
+      raise ValueError()
   
   def check_for_checks(self, position):
     pass
@@ -175,6 +185,15 @@ def take_turn(turCcolour, mousePosition, pieceChosen, pieceList):
   for piece in pieceList:
     if piece.get_position() == chosenSquare and piece.get_colour() == turnColour:
       pieceChosen = piece
+      return pieceChosen
+  try:    
+    pieceChosen.movement(chosenSquare)
+    for piece in pieceList:
+      if piece.get_position() == chosenSquare and piece.get_colour != turnColour:
+        piece.get_captured()
+    return None
+  except:
+    return None
   
   #2. checking if this is valid, if it's that colour's turn and if that piece can move there
   #3. handle pieces getting captured
