@@ -169,19 +169,21 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
     turnColour = "white"
   else:
     turnColour = "black"
-  chosenSquare = (mousePosition[0]//80*80, mousePosition[1]//80*80)
+  chosenSquare = (mousePosition[0]//80+1, mousePosition[1]//80+1)
+  print(chosenSquare)
   for piece in pieceList:
     if piece.get_position() == chosenSquare and piece.get_colour() == turnColour:
       pieceChosen = piece
-      return pieceChosen, pieceList
+      return pieceChosen, pieceList, turnColour
   try:    
     pieceChosen.movement(chosenSquare)
     for piece in pieceList:
       if piece.get_position() == chosenSquare and piece.get_colour() != turnColour:
         piece.get_captured()
-    return None, pieceList
+    turnColour /= -1
+    return None, pieceList, turnColour
   except:
-    return None, pieceList
+    return None, pieceList, turnColour
   #debugging
   #bonus movement for pawns and kings
 
@@ -210,8 +212,8 @@ def game_loop(pieceList):
         loop = False
       elif event.type == pygame.MOUSEBUTTONUP:
         pos = pygame.mouse.get_pos()
-        pieceChosen, pieceList = take_turn(turnColour, pos, pieceChosen, pieceList)
+        pieceChosen, pieceList, turnColour = take_turn(turnColour, pos, pieceChosen, pieceList)
+        print(pieceChosen)
     pygame.display.update()
-    turnColour /= -1
   pygame.quit()
 game_loop(pieceList)
