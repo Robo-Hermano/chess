@@ -10,13 +10,16 @@ class Piece:
   def get_colour(self):
     return self.__colour #so that white player can't move black pieces and vice versa
 
+  def get_image(self):
+    return self.__image
+
 class Pawn(Piece):
   val = 1
   
   def __init__(self, position, image, colour):
     self.__position = position
     self.__colour = colour
-    self.image = pygame.transform.scale(image,(80, 80)) #so image can be printed on the gui
+    self.__image = pygame.transform.scale(image,(80, 80)) #so image can be printed on the gui
 
   def movement(self, position):
     pass #slightly more complicated
@@ -33,7 +36,7 @@ class Knight(Piece):
   def __init__(self, position, image, colour):
     self.__colour = colour
     self.__position = position 
-    self.image = pygame.transform.scale(image, (80, 80))
+    self.__image = pygame.transform.scale(image, (80, 80))
 
   def movement(self, position):
     if abs(position[0] - self.__position[0]) == 2 and abs(position[1] - self.__position[1]) == 1 or abs(position[1] - self.__position[1]) == 2 and abs(position[0] - self.__position[0]) == 1:
@@ -47,7 +50,7 @@ class Bishop(Piece):
   def __init__(self, position, image, colour):
     self.__colour = colour
     self.__position = position
-    self.image = pygame.transform.scale(image, (80, 80))
+    self.__image = pygame.transform.scale(image, (80, 80))
     
   def movement(self, position):
     if abs(position[0] - self.__position[0]) == abs(position[1] - self.__position[1]):
@@ -61,7 +64,7 @@ class Rook(Piece):
   def __init__(self, position, image, colour):
     self.__colour = colour
     self.__position = position
-    self.image = pygame.transform.scale(image, (80, 80))
+    self.__image = pygame.transform.scale(image, (80, 80))
 
   def movement(self, position):
     if position[0] == self.__position[0] or position[1] == self.__position[1]:
@@ -75,7 +78,7 @@ class Queen(Piece):
   def __init__(self, position, image, colour):
     self.__colour = colour
     self.__position = position
-    self.image = pygame.transform.scale(image, (80, 80))
+    self.__image = pygame.transform.scale(image, (80, 80))
 
   def movement(self, position):
     if abs(position[0] - self.__position[0]) == abs(position[1] - self.__position[1]) or position[0] == self.__position[0] or position[1] == self.__position[1]:
@@ -89,7 +92,7 @@ class King(Piece):
   def __init__(self, position, image, colour):
     self.__colour =  colour
     self.__position = position
-    self.image = pygame.transform.scale(image, (80, 80))
+    self.__image = pygame.transform.scale(image, (80, 80))
 
   def movement(self, position):
     if abs(self.__position[0] - position[0]) <= 1 and abs(self.__position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
@@ -168,7 +171,7 @@ def print_positions(pieceList, screen):
   for piece in pieceList:
     position = piece.get_position()
     if position != (-1, -1):
-      screen.blit(piece.image, ((position[0]-1)*80, (position[1]-1)*80))
+      screen.blit(piece.get_image(), ((position[0]-1)*80, (position[1]-1)*80))
 
 def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
   if turnColour == 1:
