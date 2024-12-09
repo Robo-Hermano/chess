@@ -81,6 +81,7 @@ class Rook(Piece):
   def movement(self, position):
     if position[0] == self.position[0] or position[1] == self.position[1]:
       self.position = position
+      #make sure it can't move in front of pieces
     else:
       raise ValueError()
 
