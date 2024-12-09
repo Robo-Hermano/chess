@@ -241,7 +241,6 @@ def game_loop(pieceList):
       elif event.type == pygame.MOUSEBUTTONUP:
         pos = pygame.mouse.get_pos()
         pieceChosen, pieceList, turnColour = take_turn(turnColour, pos, pieceChosen, pieceList)
-        print(pieceChosen)
     pygame.display.update()
   pygame.quit()
 game_loop(pieceList)
