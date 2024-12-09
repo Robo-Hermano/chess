@@ -11,8 +11,9 @@ class Piece:
     return self.colour #so that white player can't move black pieces and vice versa
 
 class Pawn(Piece):
+  val = 1
+  
   def __init__(self, position, image, colour):
-    self.val = 1
     self.position = position
     self.colour = colour
     self.image = pygame.transform.scale(image,(80, 80)) #so image can be printed on the gui
@@ -27,8 +28,9 @@ class Pawn(Piece):
     pass
     
 class Knight(Piece):
+  val = 3
+  
   def __init__(self, position, image, colour):
-    self.val = 3
     self.colour = colour
     self.position = position 
     self.image = pygame.transform.scale(image, (80, 80))
@@ -40,8 +42,9 @@ class Knight(Piece):
       raise ValueError()
     
 class Bishop(Piece):
+  val = 3
+  
   def __init__(self, position, image, colour):
-    self.val = 3
     self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
@@ -53,8 +56,9 @@ class Bishop(Piece):
       raise ValueError()
 
 class Rook(Piece):
+  val = 5
+  
   def __init__(self, position, image, colour):
-    self.val = 5
     self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
@@ -66,8 +70,9 @@ class Rook(Piece):
       raise ValueError()
 
 class Queen(Piece):
+  val = 9
+  
   def __init__(self, position, image, colour):
-    self.val = 9
     self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
