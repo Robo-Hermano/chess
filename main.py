@@ -2,27 +2,24 @@ import pygame
 
 class Piece:
   def get_captured(self):
-    self.__position = (-1,-1) #so that the piece won't get printed after getting captured
+    self.position = (-1,-1) #so that the piece won't get printed after getting captured
     
   def get_position(self):
-    return self.__position #for printing position on board
+    return self.position #for printing position on board
 
   def get_colour(self):
-    return self.__colour #so that white player can't move black pieces and vice versa
+    return self.colour #so that white player can't move black pieces and vice versa
 
   def get_image(self):
-    return self.__image
+    return self.image
 
 class Pawn(Piece):
   val = 1
   
   def __init__(self, position, image, colour):
-    self.__position = position
-    self.__colour = colour
-    self.__image = pygame.transform.scale(image,(80, 80)) #so image can be printed on the gui
-
-  def get_value(self):
-    return Pawn.val
+    self.position = position
+    self.colour = colour
+    self.image = pygame.transform.scale(image,(80, 80)) #so image can be printed on the gui
 
   def movement(self, position):
     pass #slightly more complicated
@@ -37,16 +34,13 @@ class Knight(Piece):
   val = 3
   
   def __init__(self, position, image, colour):
-    self.__colour = colour
-    self.__position = position 
-    self.__image = pygame.transform.scale(image, (80, 80))
-
-  def get_value(self):
-    return Knight.val
+    self.colour = colour
+    self.position = position 
+    self.image = pygame.transform.scale(image, (80, 80))
 
   def movement(self, position):
-    if abs(position[0] - self.__position[0]) == 2 and abs(position[1] - self.__position[1]) == 1 or abs(position[1] - self.__position[1]) == 2 and abs(position[0] - self.__position[0]) == 1:
-      self.__position = position
+    if abs(position[0] - self.position[0]) == 2 and abs(position[1] - self.position[1]) == 1 or abs(position[1] - self.position[1]) == 2 and abs(position[0] - self.position[0]) == 1:
+      self.position = position
     else:
       raise ValueError()
     
@@ -54,16 +48,13 @@ class Bishop(Piece):
   val = 3
   
   def __init__(self, position, image, colour):
-    self.__colour = colour
-    self.__position = position
-    self.__image = pygame.transform.scale(image, (80, 80))
-
-  def get_value(self):
-    return Bishop.val
+    self.colour = colour
+    self.position = position
+    self.image = pygame.transform.scale(image, (80, 80))
     
   def movement(self, position):
-    if abs(position[0] - self.__position[0]) == abs(position[1] - self.__position[1]):
-      self.__position = position
+    if abs(position[0] - self.position[0]) == abs(position[1] - self.position[1]):
+      self.position = position
     else:
       raise ValueError()
 
@@ -71,16 +62,13 @@ class Rook(Piece):
   val = 5
   
   def __init__(self, position, image, colour):
-    self.__colour = colour
-    self.__position = position
-    self.__image = pygame.transform.scale(image, (80, 80))
-
-  def get_value(self):
-    return Rook.val
+    self.colour = colour
+    self.position = position
+    self.image = pygame.transform.scale(image, (80, 80))
 
   def movement(self, position):
-    if position[0] == self.__position[0] or position[1] == self.__position[1]:
-      self.__position = position
+    if position[0] == self.position[0] or position[1] == self.position[1]:
+      self.position = position
     else:
       raise ValueError()
 
@@ -88,33 +76,26 @@ class Queen(Piece):
   val = 9
   
   def __init__(self, position, image, colour):
-    self.__colour = colour
-    self.__position = position
-    self.__image = pygame.transform.scale(image, (80, 80))
-
-  def get_value(self):
-    return Queen.val
+    self.colour = colour
+    self.position = position
+    self.image = pygame.transform.scale(image, (80, 80))
 
   def movement(self, position):
-    if abs(position[0] - self.__position[0]) == abs(position[1] - self.__position[1]) or position[0] == self.__position[0] or position[1] == self.__position[1]:
-      self.__position = position
+    if abs(position[0] - self.position[0]) == abs(position[1] - self.position[1]) or position[0] == self.position[0] or position[1] == self.position[1]:
+      self.position = position
     else:
       raise ValueError()
       
 class King(Piece):
-  val = 0
-  
   def __init__(self, position, image, colour):
-    self.__colour =  colour
-    self.__position = position
-    self.__image = pygame.transform.scale(image, (80, 80))
-
-  def get_value(self):
-    return King.val
+    self.val = 0
+    self.colour =  colour
+    self.position = position
+    self.image = pygame.transform.scale(image, (80, 80))
 
   def movement(self, position):
-    if abs(self.__position[0] - position[0]) <= 1 and abs(self.__position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
-      self.__position = position
+    if abs(self.position[0] - position[0]) <= 1 and abs(self.position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
+      self.position = position
     else:
       raise ValueError()
   
