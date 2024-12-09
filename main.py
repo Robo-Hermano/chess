@@ -21,6 +21,9 @@ class Pawn(Piece):
     self.__colour = colour
     self.__image = pygame.transform.scale(image,(80, 80)) #so image can be printed on the gui
 
+  def get_value(self):
+    return Pawn.val
+
   def movement(self, position):
     pass #slightly more complicated
 
@@ -38,6 +41,9 @@ class Knight(Piece):
     self.__position = position 
     self.__image = pygame.transform.scale(image, (80, 80))
 
+  def get_value(self):
+    return Knight.val
+
   def movement(self, position):
     if abs(position[0] - self.__position[0]) == 2 and abs(position[1] - self.__position[1]) == 1 or abs(position[1] - self.__position[1]) == 2 and abs(position[0] - self.__position[0]) == 1:
       self.__position = position
@@ -51,6 +57,9 @@ class Bishop(Piece):
     self.__colour = colour
     self.__position = position
     self.__image = pygame.transform.scale(image, (80, 80))
+
+  def get_value(self):
+    return Bishop.val
     
   def movement(self, position):
     if abs(position[0] - self.__position[0]) == abs(position[1] - self.__position[1]):
@@ -66,6 +75,9 @@ class Rook(Piece):
     self.__position = position
     self.__image = pygame.transform.scale(image, (80, 80))
 
+  def get_value(self):
+    return Rook.val
+
   def movement(self, position):
     if position[0] == self.__position[0] or position[1] == self.__position[1]:
       self.__position = position
@@ -80,6 +92,9 @@ class Queen(Piece):
     self.__position = position
     self.__image = pygame.transform.scale(image, (80, 80))
 
+  def get_value(self):
+    return Queen.val
+
   def movement(self, position):
     if abs(position[0] - self.__position[0]) == abs(position[1] - self.__position[1]) or position[0] == self.__position[0] or position[1] == self.__position[1]:
       self.__position = position
@@ -93,6 +108,9 @@ class King(Piece):
     self.__colour =  colour
     self.__position = position
     self.__image = pygame.transform.scale(image, (80, 80))
+
+  def get_value(self):
+    return King.val
 
   def movement(self, position):
     if abs(self.__position[0] - position[0]) <= 1 and abs(self.__position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
