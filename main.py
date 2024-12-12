@@ -136,15 +136,16 @@ class King(Piece):
   def movement(self, position):
     if abs(self.position[0] - position[0]) <= 1 and abs(self.position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
       self.position = position
+    elif self.castling():
+      pass
     else:
       raise ValueError()
   
   def check_for_checks(self, position):
-    pass
+    return True
 
   def castling(self, position):
-    pass
-
+    return False
 #adjusting images so that they can be loaded into pygame
 pawnImgWhite = pygame.image.load("white_pawn.png")
 pawnImgBlack = pygame.image.load("black_pawn.png")
