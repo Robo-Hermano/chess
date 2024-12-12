@@ -136,21 +136,23 @@ class King(Piece):
   def movement(self, position):
     if abs(self.position[0] - position[0]) <= 1 and abs(self.position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
       self.position = position
-    elif self.castling():
+    elif self.castling(position):
       pass
     else:
       raise ValueError()
   
   def check_for_checks(self, position):
     for piece in pieceList:
-      if piece.get_colour() != self.get_colour():
+      check = False
+      if piece.get_colour() != self.get_colour() and piece.get_position() != (-1, -1):
         oldPosition = piece.get_position()
-        kingPosition = self.get_position()
+        kingPosition = position
         try:
           piece.movement(kingPosition)
-          raise KeyError("check exists")
-        except Exception as e:
-          if e == "check exists":
+          check = True
+          raise KeyError()
+        except:
+          if check:
             piece.movement(oldPosition)
             return False
     return True
