@@ -142,10 +142,22 @@ class King(Piece):
       raise ValueError()
   
   def check_for_checks(self, position):
+    for piece in pieceList:
+      if piece.get_colour() != self.get_colour():
+        oldPosition = piece.get_position()
+        kingPosition = self.get_position()
+        try:
+          piece.movement(kingPosition)
+          raise KeyError("check exists")
+        except Exception as e:
+          if e == "check exists":
+            piece.movement(oldPosition)
+            return False
     return True
 
   def castling(self, position):
     return False
+    
 #adjusting images so that they can be loaded into pygame
 pawnImgWhite = pygame.image.load("white_pawn.png")
 pawnImgBlack = pygame.image.load("black_pawn.png")
