@@ -1,3 +1,4 @@
+#i need a piece position grid, would save many lines
 import pygame
 
 class Piece:
