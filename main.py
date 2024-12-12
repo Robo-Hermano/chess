@@ -26,10 +26,10 @@ class Pawn(Piece):
     return Pawn.val
 
   def movement(self, position):
-    if position[0] - self.position[0] == 0 and not self.hasMoved and abs(self.position[1] - position[1]) == 2:
+    if position[0] - self.position[0] == 0 and not self.hasMoved and ((self.position[1] - position[1] == -2 and self.get_colour == "black") or (self.position[1] - position[1] == 2 and self.get_colour == "white")):
       self.position = position
       self.hasMoved = True
-    elif position[0] - self.position[0] == 0 and abs(self.position[1] - position[1]) == 1:
+    elif position[0] - self.position[0] == 0 and ((self.position[1] - position[1] == -1 and self.get_colour == "black") or (self.position[1] - position[1] == 1 and self.get_colour == "white")):
       self.position = position
       self.hasMoved = True
     elif self.capture(position) == True:
@@ -41,7 +41,7 @@ class Pawn(Piece):
   def capture(self, position):
     if self.en_passant(position) == True:
       return True
-    elif abs(position[0] - self.position[0]) == 1 and abs(position[1] - self.position[1]) == 1:
+    elif (self.get_colour() == "black" and self.position[0] - position[0] == -1 and self.position[1] - position[1] == -1) or (self.get_colour() == "white" and self.position[0] - position[0] == 1 and self.position[1] - position[1] == 1):
       for piece in pieceList:
         if piece.get_colour() != self.get_colour() and piece.get_position() == position:
           return True
