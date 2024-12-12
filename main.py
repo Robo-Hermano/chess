@@ -20,18 +20,38 @@ class Pawn(Piece):
     self.position = position
     self.colour = colour
     self.image = pygame.transform.scale(image,(80, 80)) #so image can be printed on the gui
+    self.hasMoved = False
 
   def get_value(self):
     return Pawn.val
 
   def movement(self, position):
-    pass #slightly more complicated
+    if position[0] - self.position[0] == 0 and not self.hasMoved and abs(self.position[1] - position[1]) == 2:
+      self.position = position
+      self.hasMoved = True
+    elif position[0] - self.position[0] == 0 and abs(self.position[1] - position[1]) == 1:
+      self.position = position
+      self.hasMoved = True
+    elif self.capture(position) == True:
+      self.position = position
+      self.hasMoved = True
+    else:
+      raise ValueError()
 
   def capture(self, position):
-    pass
+    if self.en_passant(position) == True:
+      return True
+    elif abs(position[0] - self.position[0]) == 1 and abs(position[1] - self.position[1]) == 1:
+      for piece in pieceList:
+        if piece.get_colour() != self.get_colour() and piece.get_position() == position:
+          return True
+      return False
+    else:
+      return False
+        
     
   def en_passant(self, position):
-    pass
+    return False #fix this later
     
 class Knight(Piece):
   val = 3
