@@ -42,7 +42,7 @@ class Pawn(Piece):
   def capture(self, position):
     if self.en_passant(position) == True:
       return True
-    elif (self.get_colour() == "black" and self.position[0] - position[0] == -1 and self.position[1] - position[1] == -1) or (self.get_colour() == "white" and self.position[0] - position[0] == 1 and self.position[1] - position[1] == 1):
+    elif (self.get_colour() == "black" and abs(self.position[0] - position[0]) == 1 and self.position[1] - position[1] == -1) or (self.get_colour() == "white" and abs(self.position[0] - position[0]) == 1 and self.position[1] - position[1] == 1):
       for piece in pieceList:
         if piece.get_colour() != self.get_colour() and piece.get_position() == position:
           return True
