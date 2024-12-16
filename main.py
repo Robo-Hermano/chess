@@ -14,8 +14,12 @@ class Piece:
   def get_image(self):
     return self.image
 
+  def get_piece_type(self):
+    return self.pieceType
+
 class Pawn(Piece):
   val = 1
+  pieceType = "pawn"
   
   def __init__(self, position, image, colour):
     self.position = position
@@ -56,6 +60,7 @@ class Pawn(Piece):
     
 class Knight(Piece):
   val = 3
+  pieceType = "knight"
   
   def __init__(self, position, image, colour):
     self.colour = colour
@@ -73,6 +78,7 @@ class Knight(Piece):
     
 class Bishop(Piece):
   val = 3
+  pieceType = "bishop"
   
   def __init__(self, position, image, colour):
     self.colour = colour
@@ -90,11 +96,13 @@ class Bishop(Piece):
 
 class Rook(Piece):
   val = 5
+  pieceType = "rook"
   
   def __init__(self, position, image, colour):
     self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
+    self.hasMoved == False
 
   def get_value(self):
     return Rook.val
@@ -102,17 +110,19 @@ class Rook(Piece):
   def movement(self, position):
     if position[0] == self.position[0] or position[1] == self.position[1]:
       self.position = position
-      #make sure it can't move in front of pieces
+      self.hasMoved = True
     else:
       raise ValueError()
 
 class Queen(Piece):
   val = 9
+  pieceType = "queen"
   
   def __init__(self, position, image, colour):
     self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
+    self.hasMoved == None
 
   def get_value(self):
     return Queen.val
@@ -125,11 +135,13 @@ class Queen(Piece):
       
 class King(Piece):
   val = 0
+  pieceType = "king"
   
   def __init__(self, position, image, colour):
     self.colour =  colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
+    self.hasMoved == False
 
   def get_value(self):
     return King.val
@@ -138,7 +150,8 @@ class King(Piece):
     if abs(self.position[0] - position[0]) <= 1 and abs(self.position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
       self.position = position
     elif self.castling(position):
-      pass
+      self.position = position
+      self.hasMoved = True
     else:
       raise ValueError()
   
@@ -159,7 +172,50 @@ class King(Piece):
     return True
 
   def castling(self, position):
-    return False
+    if self.hasMoved:
+      return False
+    rookNotMoved = False
+    if self.get_colour() == "white" and position == (7,8):
+      if self.check_for_checks(7,8) == False or self.check_for_checks(6,8) == False:
+        return False
+      for i in ((7,8),(6,8)):
+        for piece in pieceList:
+          if piece.get_position() == i:
+            return False
+          elif piece.get_piece_type() == "rook" and piece.get_position() == (8,8) and piece.get_colour() == "white" and not piece.hasMoved:
+            rookNotMoved = True
+    elif self.get_colour() == "white" and position == (3,8):
+      if self.check_for_checks(3,8) == False or self.check_for_checks(4,8) == False:
+        return False
+      for i in ((4,8),(3,8),(2,8)):
+        for piece in pieceList:
+          if piece.get_position() == i:
+            return False
+          elif piece.get_piece_type() == "rook" and piece.get_position() == (1,8) and piece.get_colour() == "white" and not piece.hasMoved:
+            rookNotMoved = True
+    elif self.get_colour() == "black" and position == (7,1):
+      if self.check_for_checks(7,1) == False or self.check_for_checks(6,1) == False:
+        return False
+      for i in ((7,1),(6,1)):
+        for piece in pieceList:
+          if piece.get_position() == i:
+            return False
+          elif piece.get_piece_type() == "rook" and piece.get_position() == (8,1) and piece.get_colour() == "black" and not piece.hasMoved:
+            rookNotMoved = True
+    elif self.get_colour() == "black" and position == (3,1):
+      if self.check_for_checks(3,1) == False or self.check_for_checks(4,1) == False:
+        return False
+      for i in ((4,1),(3,1), (2,1)):
+        for piece in pieceList:
+          if piece.get_position() == i:
+            return False
+          elif piece.get_piece_type() == "rook" and piece.get_position() == (1,1) and piece.get_colour() == "black" and not piece.hasMoved:
+            rookNotMoved = True
+    else:
+      return False
+    if not rookNotMoved:
+      return False
+    return True
     
 #adjusting images so that they can be loaded into pygame
 pawnImgWhite = pygame.image.load("white_pawn.png")
