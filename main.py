@@ -1,4 +1,6 @@
-#i need a piece position grid, would save many lines
+#use check for check functions with pieces other than king
+#make sure bishops, rooks, queens can't move through pieces
+#(HARD) add en passant
 import pygame
 
 class Piece:
