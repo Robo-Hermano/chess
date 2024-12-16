@@ -66,6 +66,7 @@ class Knight(Piece):
     self.colour = colour
     self.position = position 
     self.image = pygame.transform.scale(image, (80, 80))
+    self.hasMoved = None
 
   def get_value(self):
     return Knight.val
@@ -84,6 +85,7 @@ class Bishop(Piece):
     self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
+    self.hasMoved = None
 
   def get_value(self):
     return Bishop.val
@@ -102,7 +104,7 @@ class Rook(Piece):
     self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
-    self.hasMoved == False
+    self.hasMoved = False
 
   def get_value(self):
     return Rook.val
@@ -122,7 +124,7 @@ class Queen(Piece):
     self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
-    self.hasMoved == None
+    self.hasMoved = None
 
   def get_value(self):
     return Queen.val
@@ -141,7 +143,7 @@ class King(Piece):
     self.colour =  colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
-    self.hasMoved == False
+    self.hasMoved = False
 
   def get_value(self):
     return King.val
