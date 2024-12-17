@@ -46,6 +46,8 @@ class Pawn(Piece):
         for piece in pieceList:
           if piece.get_position() == pos:
             raise ValueError()
+      self.position = position
+      self.hasMoved = True
     elif position[0] - self.position[0] == 0 and ((self.position[1] - position[1] == -1 and self.get_colour() == "black") or (self.position[1] - position[1] == 1 and self.get_colour() == "white")):
       for piece in pieceList:
         if piece.get_position() == position:
