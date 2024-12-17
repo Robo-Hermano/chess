@@ -1,6 +1,5 @@
 #use check for check functions with pieces other than king
-#make sure bishops, rooks, queens can't move through pieces
-#(MEDIUM) deal with promotions
+#deal with promotions
 #(HARD) add en passant
 import pygame
 
@@ -109,9 +108,21 @@ class Bishop(Piece):
 
   def check_validity(self, position):
     if self.position[0] - position[0] == self.position[1] - position[1]:
-      for j in range(self.position[0]+1, position[0]):
+      C = (position[0]-self.position[0])/abs(position[0]-self.position[0])
+      for j in range(int(C), position[0]-self.position[0], int(C)):
         for piece in pieceList:
-          if piece.get_position() == (j,j)
+          if piece.get_position() == (self.position[0]+j,self.position[1]+j):
+            raise ValueError()
+    elif self.position[0] - position[0] < 0:
+      for j in range(-1, position[1]-self.position[1], -1):
+        for piece in pieceList:
+          if piece.get_position() == (self.position[0]-j,self.position[1]+j):
+            raise ValueError()
+    else:
+      for j in range(-1, position[0]-self.position[0], -1):
+        for piece in pieceList:
+          if piece.get_position() == (self.position[0]+j, self.position[1]-j):
+            raise ValueError()
   def movement(self, position):
     if abs(position[0] - self.position[0]) == abs(position[1] - self.position[1]):
       self.check_validity(position)
@@ -132,13 +143,13 @@ class Rook(Piece):
   def get_value(self):
     return Rook.val
 
-  def check_validity(originalPos, NewPos, index):
+  def check_validity(self, originalPos, NewPos, index):
     C = (NewPos[index]-originalPos[index])/abs(NewPos[index]-originalPos[index])
-    for i in range(originalPos[index]+C, NewPos[index]):
+    for i in range(int(C), NewPos[index]-originalPos[index], int(C)):
       if index == 0:
-        pos = (i, originalPos[1])
+        pos = (originalPos[0] + i, originalPos[1])
       else:
-        pos = (originalPos[0], i)
+        pos = (originalPos[0], originalPos[1] + i)
       for piece in pieceList:
         if piece.get_position() == pos:
           raise ValueError()
@@ -166,9 +177,44 @@ class Queen(Piece):
 
   def get_value(self):
     return Queen.val
+  
+  def check_validity_diagonal(self, position):
+    if self.position[0] - position[0] == self.position[1] - position[1]:
+      C = (position[0]-self.position[0])/abs(position[0]-self.position[0])
+      for j in range(int(C), position[0]-self.position[0], int(C)):
+        for piece in pieceList:
+          if piece.get_position() == (self.position[0]+j,self.position[1]+j):
+            raise ValueError()
+    elif self.position[0] - position[0] < 0:
+      for j in range(-1, position[1]-self.position[1], -1):
+        for piece in pieceList:
+          if piece.get_position() == (self.position[0]-j,self.position[1]+j):
+            raise ValueError()
+    else:
+      for j in range(-1, position[0]-self.position[0], -1):
+        for piece in pieceList:
+          if piece.get_position() == (self.position[0]+j, self.position[1]-j):
+            raise ValueError()
+  
+  def check_validity_lateral(self, originalPos, NewPos, index):
+    C = (NewPos[index]-originalPos[index])/abs(NewPos[index]-originalPos[index])
+    for i in range(int(C), NewPos[index]-originalPos[index], int(C)):
+      if index == 0:
+        pos = (originalPos[0] + i, originalPos[1])
+      else:
+        pos = (originalPos[0], originalPos[1] + i)
+      for piece in pieceList:
+        if piece.get_position() == pos:
+          raise ValueError()
 
   def movement(self, position):
     if abs(position[0] - self.position[0]) == abs(position[1] - self.position[1]) or position[0] == self.position[0] or position[1] == self.position[1]:
+      if abs(position[0]-self.position[0]) == abs(position[1]-self.position[1]):
+        self.check_validity_diagonal(position)
+      elif position[0] != self.position[0]:
+        self.check_validity_lateral(self.position, position, 0)
+      else:
+        self.check_validity_lateral(self.position, position, 1)
       self.position = position
     else:
       raise ValueError()
