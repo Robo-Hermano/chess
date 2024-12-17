@@ -106,9 +106,15 @@ class Bishop(Piece):
 
   def get_value(self):
     return Bishop.val
-    
+
+  def check_validity(self, position):
+    if self.position[0] - position[0] == self.position[1] - position[1]:
+      for j in range(self.position[0]+1, position[0]):
+        for piece in pieceList:
+          if piece.get_position() == (j,j)
   def movement(self, position):
     if abs(position[0] - self.position[0]) == abs(position[1] - self.position[1]):
+      self.check_validity(position)
       self.position = position
     else:
       raise ValueError()
@@ -127,7 +133,8 @@ class Rook(Piece):
     return Rook.val
 
   def check_validity(originalPos, NewPos, index):
-    for i in range(originalPos[index]+1, NewPos[index]):
+    C = (NewPos[index]-originalPos[index])/abs(NewPos[index]-originalPos[index])
+    for i in range(originalPos[index]+C, NewPos[index]):
       if index == 0:
         pos = (i, originalPos[1])
       else:
