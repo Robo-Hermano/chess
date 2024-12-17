@@ -126,8 +126,22 @@ class Rook(Piece):
   def get_value(self):
     return Rook.val
 
+  def check_validity(originalPos, NewPos, index):
+    for i in range(originalPos[index]+1, NewPos[index]):
+      if index == 0:
+        pos = (i, originalPos[1])
+      else:
+        pos = (originalPos[0], i)
+      for piece in pieceList:
+        if piece.get_position() == pos:
+          raise ValueError()
+
   def movement(self, position):
     if position[0] == self.position[0] or position[1] == self.position[1]:
+      if position[0] != self.position[0]:
+        self.check_validity(self.position, position, 0)
+      else:
+        self.check_validity(self.position, position, 1)
       self.position = position
       self.hasMoved = True
     else:
