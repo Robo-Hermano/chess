@@ -309,12 +309,6 @@ BlackBishopTwo = Bishop((6,1),bishopImgBlack, "black")
 BlackQueen = Queen((4,1),queenImgBlack, "black")
 BlackKing = King((5,1),kingImgBlack, "black")
 
-#incase pawns promote
-WhitePromotionOne = None
-WhitePromotionTwo = None
-BlackPromotionOne = None
-BlackPromotionTwo = None
-
 pieceList =[ WhitePawnOne, WhitePawnTwo, WhitePawnThree, WhitePawnFour, WhitePawnFive, WhitePawnSix, WhitePawnSeven, WhitePawnEight, 
              WhiteRookOne, WhiteRookTwo, WhiteKnightOne, WhiteKnightTwo, WhiteBishopOne, WhiteBishopTwo, WhiteQueen, WhiteKing,
              BlackPawnOne, BlackPawnTwo, BlackPawnThree, BlackPawnFour, BlackPawnFive, BlackPawnSix, BlackPawnSeven, BlackPawnEight,
