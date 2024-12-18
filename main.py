@@ -1,5 +1,6 @@
 #deal with promotions
 #(HARD) add en passant
+#finally add maintenance and some other QoL
 import pygame
 
 class Piece:
