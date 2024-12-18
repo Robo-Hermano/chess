@@ -1,4 +1,3 @@
-#use check for check functions with pieces other than king
 #deal with promotions
 #(HARD) add en passant
 import pygame
@@ -236,7 +235,7 @@ class King(Piece):
     if abs(self.position[0] - position[0]) <= 1 and abs(self.position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
       self.position = position
       self.hasMoved = True
-    elif self.castling(position) != False:
+    elif self.castling(position) != False and self.check_for_checks(self.position) == True:
       self.position = position
       self.hasMoved = True
       for piece in pieceList:
