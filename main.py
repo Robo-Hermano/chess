@@ -367,6 +367,8 @@ pieceList =[ WhitePawnOne, WhitePawnTwo, WhitePawnThree, WhitePawnFour, WhitePaw
              BlackPawnOne, BlackPawnTwo, BlackPawnThree, BlackPawnFour, BlackPawnFive, BlackPawnSix, BlackPawnSeven, BlackPawnEight,
              BlackRookOne, BlackRookTwo, BlackKnightOne, BlackKnightTwo, BlackBishopOne, BlackBishopTwo, BlackQueen, BlackKing
             ]
+def under_promotion():
+  
 
 def print_positions(pieceList, screen):
   for piece in pieceList:
@@ -402,7 +404,6 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
     return None, pieceList, turnColour
   except:
     return None, pieceList, colourToNumber[turnColour]
-  #bonus movement for pawns and kings
 
 def game_loop(pieceList):
   pygame.init()
