@@ -368,7 +368,7 @@ pieceList =[ WhitePawnOne, WhitePawnTwo, WhitePawnThree, WhitePawnFour, WhitePaw
              BlackRookOne, BlackRookTwo, BlackKnightOne, BlackKnightTwo, BlackBishopOne, BlackBishopTwo, BlackQueen, BlackKing
             ]
 def under_promotion():
-  
+  pass
 
 def print_positions(pieceList, screen):
   for piece in pieceList:
