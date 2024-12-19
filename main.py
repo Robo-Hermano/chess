@@ -1,4 +1,4 @@
-#(kinda hard) deal with promotions
+#(way harder than i thought) deal with promotions
 #(HARD) add en passant
 #finally add maintenance and some other QoL
 import pygame
