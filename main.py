@@ -388,11 +388,11 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
       pieceChosen = piece
       return pieceChosen, pieceList, colourToNumber[turnColour]
   try:
+    oldPos = pieceChosen.get_position()
+    pieceChosen.movement(chosenSquare)
     for piece in pieceList:
       if piece.get_position() == chosenSquare and piece.get_colour() != turnColour:
         piece.get_captured()    
-    oldPos = pieceChosen.get_position()
-    pieceChosen.movement(chosenSquare)
     if pieceChosen.get_colour() == "white" and pieceChosen.get_piece_type() != "king" and pieceList[15].check_for_checks(pieceList[15].get_position()) == False:
       pieceChosen.position = oldPos
       raise KeyError()
