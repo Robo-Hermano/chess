@@ -1,4 +1,3 @@
-#(kinda hard) deal with promotions
 #(HARD) add en passant
 #finally add maintenance and some other QoL
 import pygame
@@ -330,6 +329,8 @@ queenImgBlack = pygame.image.load("black_queen.png")
 kingImgWhite = pygame.image.load("white_king.png")
 kingImgBlack = pygame.image.load("black_king.png")
 
+images = [rookImgWhite, rookImgBlack, knightImgWhite, knightImgBlack, bishopImgWhite, bishopImgBlack, queenImgWhite, queenImgBlack]
+
 #initialising every piece
 WhitePawnOne = Pawn((1,7),pawnImgWhite, "white")
 WhitePawnTwo = Pawn((2,7),pawnImgWhite, "white")
@@ -370,8 +371,34 @@ pieceList =[ WhitePawnOne, WhitePawnTwo, WhitePawnThree, WhitePawnFour, WhitePaw
              BlackPawnOne, BlackPawnTwo, BlackPawnThree, BlackPawnFour, BlackPawnFive, BlackPawnSix, BlackPawnSeven, BlackPawnEight,
              BlackRookOne, BlackRookTwo, BlackKnightOne, BlackKnightTwo, BlackBishopOne, BlackBishopTwo, BlackQueen, BlackKing
             ]
-def under_promotion():
-  pass
+def promotion(piece, pieceList, pieceChosen, images):
+  position = pieceChosen.get_position()
+  for i in range(len(pieceList)):
+    if pieceList[i] == pieceChosen:
+      if piece == "queen" and pieceChosen.get_colour() == "white":
+        pieceList[i] = Queen(colour = "white", position = position, image = images[6])
+        return pieceList
+      elif piece == "queen" and pieceChosen.get_colour() == "black":
+        pieceList[i] = Queen(colour = "black", position = position, image = images[7])
+        return pieceList
+      elif piece == "rook" and pieceChosen.get_colour() == "white":
+        pieceList[i] = Rook(colour = "white", position = position, image = images[0])
+        return pieceList
+      elif piece == "rook" and pieceChosen.get_colour() == "black":
+        pieceList[i] = Rook(colour = "black", position = position, image = images[1])
+        return pieceList
+      elif piece == "bishop" and pieceChosen.get_colour() == "white":
+        pieceList[i] = Bishop(colour = "white", position = position, image = images[4])
+        return pieceList
+      elif piece == "bishop" and pieceChosen.get_colour() == "black":
+        pieceList[i] = Bishop(colour = "black", position = position, image = images[5])
+        return pieceList
+      elif piece == "knight" and pieceChosen.get_colour() == "white":
+        pieceList[i] = Knight(colour = "white", position = position, image = images[2])
+        return pieceList
+      else:
+        pieceList[i] = Knight(colour = "black", position = position, image = images[3])
+        return pieceList
 
 def print_positions(pieceList, screen):
   for piece in pieceList:
@@ -379,7 +406,7 @@ def print_positions(pieceList, screen):
     if position != (-1, -1):
       screen.blit(piece.get_image(), ((position[0]-1)*80, (position[1]-1)*80))
 
-def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
+def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images):
   if turnColour == 1:
     turnColour = "white"
   else:
@@ -403,14 +430,13 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
       pieceChosen.position = oldPos
       raise KeyError()
     if pieceChosen.get_piece_type() == "pawn" and ((turnColour == "white" and chosenSquare[1] == 1) or (turnColour == "black" and chosenSquare[1] == 8)):
-      if turnColour == "black":
-        for index in range(len(pieceList)):
-          if pieceList[index] == pieceChosen:
-            pieceList[index] = Queen(position = chosenSquare, colour = turnColour, image = queenImgBlack)
+      promotedPiece = input("input your promoted piece: ")
+      promotedPiece = promotedPiece.lower()
+      if promotedPiece not in ["pawn", "knight","bishop","queen"]:
+        pieceChosen.position = oldPos
+        raise KeyError()
       else:
-        for index in range(len(pieceList)):
-          if pieceList[index] == pieceChosen:
-            pieceList[index] = Queen(position = chosenSquare, colour = turnColour, image = queenImgWhite)
+        pieceList = promotion(promotedPiece, pieceList, pieceChosen, images)
     turnColour = colourToNumber[turnColour]
     turnColour /= -1
     return None, pieceList, turnColour
@@ -418,7 +444,7 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
     print(e)
     return None, pieceList, colourToNumber[turnColour]
 
-def game_loop(pieceList):
+def game_loop(pieceList, images):
   pygame.init()
   pygame.display.set_caption("2 player chess, stockfish coming soon")
   screen = pygame.display.set_mode((640, 640))
@@ -444,7 +470,7 @@ def game_loop(pieceList):
         loop = False
       elif event.type == pygame.MOUSEBUTTONUP:
         pos = pygame.mouse.get_pos()
-        pieceChosen, pieceList, turnColour = take_turn(turnColour, pos, pieceChosen, pieceList)
+        pieceChosen, pieceList, turnColour = take_turn(turnColour, pos, pieceChosen, pieceList, images)
     pygame.display.update()
   pygame.quit()
-game_loop(pieceList)
+game_loop(pieceList, images)
