@@ -252,6 +252,8 @@ class King(Piece):
       raise ValueError()
   
   def check_for_checks(self, position):
+    oldPos = self.position
+    self.position = position
     for piece in pieceList:
       check = False
       if piece.get_colour() != self.get_colour() and piece.get_position() != (-1, -1):
@@ -264,6 +266,7 @@ class King(Piece):
         except:
           if check:
             piece.position = oldPosition
+            self.position = oldPos
             return False
     return True
 
@@ -399,10 +402,20 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList):
     elif pieceChosen.get_colour() == "black" and pieceChosen.get_piece_type() != "king" and pieceList[31].check_for_checks(pieceList[31].get_position()) == False:
       pieceChosen.position = oldPos
       raise KeyError()
+    if pieceChosen.get_piece_type() == "pawn" and ((turnColour == "white" and chosenSquare[1] == 1) or (turnColour == "black" and chosenSquare[1] == 8)):
+      if turnColour == "black":
+        for index in range(len(pieceList)):
+          if pieceList[index] == pieceChosen:
+            pieceList[index] = Queen(position = chosenSquare, colour = turnColour, image = queenImgBlack)
+      else:
+        for index in range(len(pieceList)):
+          if pieceList[index] == pieceChosen:
+            pieceList[index] = Queen(position = chosenSquare, colour = turnColour, image = queenImgWhite)
     turnColour = colourToNumber[turnColour]
     turnColour /= -1
     return None, pieceList, turnColour
-  except:
+  except Exception as e:
+    print(e)
     return None, pieceList, colourToNumber[turnColour]
 
 def game_loop(pieceList):
