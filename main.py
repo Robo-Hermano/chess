@@ -27,11 +27,15 @@ class Pawn(Piece):
     self.image = pygame.transform.scale(image,(80, 80)) #so image can be printed on the gui
     self.hasMoved = False
     self.pieceType = "pawn"
+    self.enPassant = False
 
   def get_value(self):
     return Pawn.val
 
-  def movement(self, position):
+  def get_en_passant(self):
+    return self.enPassant
+
+  def movement(self, position, lastMoveEnPassant):
     if position[0] - self.position[0] == 0 and not self.hasMoved and (self.position[1] - position[1] == -2 and self.get_colour() == "black"):
       for pos in ((position[0], position[1]),(position[0],position[1]-1)):
         for piece in pieceList:
@@ -39,6 +43,7 @@ class Pawn(Piece):
             raise ValueError()
       self.position = position
       self.hasMoved = True
+      self.enPassant = True
     elif position[0] - self.position[0] == 0 and not self.hasMoved and (self.position[1] - position[1] == 2 and self.get_colour() == "white"):
       for pos in ((position[0], position[1]), (position[0],position[1]+1)):
         for piece in pieceList:
@@ -46,20 +51,22 @@ class Pawn(Piece):
             raise ValueError()
       self.position = position
       self.hasMoved = True
+      self.enPassant = False
     elif position[0] - self.position[0] == 0 and ((self.position[1] - position[1] == -1 and self.get_colour() == "black") or (self.position[1] - position[1] == 1 and self.get_colour() == "white")):
       for piece in pieceList:
         if piece.get_position() == position:
-          raise ValueError()
+          raise ValueError("c")
       self.position = position
       self.hasMoved = True
-    elif self.capture(position) == True:
+    elif self.capture(position, lastMoveEnPassant) == True:
       self.position = position
       self.hasMoved = True
+      self.enPassant
     else:
       raise ValueError()
 
-  def capture(self, position):
-    if self.en_passant(position) == True:
+  def capture(self, position, lastMoveEnPassant):
+    if self.en_passant(position, lastMoveEnPassant) == True:
       return True
     elif (self.get_colour() == "black" and abs(self.position[0] - position[0]) == 1 and self.position[1] - position[1] == -1) or (self.get_colour() == "white" and abs(self.position[0] - position[0]) == 1 and self.position[1] - position[1] == 1):
       for piece in pieceList:
@@ -70,7 +77,7 @@ class Pawn(Piece):
       return False
         
     
-  def en_passant(self, position):
+  def en_passant(self, position, lastMoveEnPassant):
     return False #fix this later
     
 class Knight(Piece):
@@ -406,7 +413,7 @@ def print_positions(pieceList, screen):
     if position != (-1, -1):
       screen.blit(piece.get_image(), ((position[0]-1)*80, (position[1]-1)*80))
 
-def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images):
+def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images, lastMoveEnPassant):
   if turnColour == 1:
     turnColour = "white"
   else:
@@ -416,10 +423,13 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images):
   for piece in pieceList:
     if piece.get_position() == chosenSquare and piece.get_colour() == turnColour:
       pieceChosen = piece
-      return pieceChosen, pieceList, colourToNumber[turnColour]
+      return pieceChosen, pieceList, colourToNumber[turnColour], lastMoveEnPassant
   try:
     oldPos = pieceChosen.get_position()
-    pieceChosen.movement(chosenSquare)
+    if pieceChosen.get_piece_type() != "pawn":
+      pieceChosen.movement(chosenSquare)
+    else:
+      pieceChosen.movement(chosenSquare, lastMoveEnPassant)
     for piece in pieceList:
       if piece.get_position() == chosenSquare and piece.get_colour() != turnColour:
         piece.get_captured()    
@@ -439,12 +449,12 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images):
         pieceList = promotion(promotedPiece, pieceList, pieceChosen, images)
     turnColour = colourToNumber[turnColour]
     turnColour /= -1
-    return None, pieceList, turnColour
+    return None, pieceList, turnColour, lastMoveEnPassant
   except Exception as e:
     print(e)
-    return None, pieceList, colourToNumber[turnColour]
+    return None, pieceList, colourToNumber[turnColour], lastMoveEnPassant
 
-def game_loop(pieceList, images):
+def game_loop(pieceList, images, lastMoveEnPassant):
   pygame.init()
   pygame.display.set_caption("2 player chess, stockfish coming soon")
   screen = pygame.display.set_mode((640, 640))
@@ -470,7 +480,7 @@ def game_loop(pieceList, images):
         loop = False
       elif event.type == pygame.MOUSEBUTTONUP:
         pos = pygame.mouse.get_pos()
-        pieceChosen, pieceList, turnColour = take_turn(turnColour, pos, pieceChosen, pieceList, images)
+        pieceChosen, pieceList, turnColour, lastMoveEnPassant = take_turn(turnColour, pos, pieceChosen, pieceList, images, lastMoveEnPassant)
     pygame.display.update()
   pygame.quit()
-game_loop(pieceList, images)
+game_loop(pieceList, images, False)
