@@ -33,14 +33,14 @@ class Pawn(Piece):
 
   def movement(self, position):
     if position[0] - self.position[0] == 0 and not self.hasMoved and (self.position[1] - position[1] == -2 and self.get_colour() == "black"):
-      for pos in ((position[0], position[1]),(position[0]-1,position[1]-1)):
+      for pos in ((position[0], position[1]),(position[0],position[1]-1)):
         for piece in pieceList:
           if piece.get_position() == pos:
             raise ValueError()
       self.position = position
       self.hasMoved = True
     elif position[0] - self.position[0] == 0 and not self.hasMoved and (self.position[1] - position[1] == 2 and self.get_colour() == "white"):
-      for pos in ((position[0], position[1]), (position[0]+1,position[1]+1)):
+      for pos in ((position[0], position[1]), (position[0],position[1]+1)):
         for piece in pieceList:
           if piece.get_position() == pos:
             raise ValueError()
