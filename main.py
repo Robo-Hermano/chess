@@ -79,9 +79,9 @@ class Pawn(Piece):
   def en_passant(self, position, lastMoveEnPassant):
     if not lastMoveEnPassant:
       return False
-    elif self.get_colour() == "black" and abs(self.position[0] - position[0]) == 1 and self.position[1] - position[1] == -1 and pieceList[i].get_en_passant() == True:
+    elif self.get_colour() == "black" and abs(self.position[0] - position[0]) == 1 and self.position[1] - position[1] == -1:
       for i in range(len(pieceList)):
-        if pieceList[i].get_colour() != self.get_colour() and pieceList[i].get_position() == (position[0],position[1]-1):
+        if pieceList[i].get_colour() != self.get_colour() and pieceList[i].get_position() == (position[0],position[1]-1) and pieceList[i].get_en_passant() == True:
           pieceList[i].get_captured()
           return True
     elif self.get_colour() == "white" and abs(self.position[0] - position[0]) == 1 and self.position[1] - position[1] == 1:
@@ -470,8 +470,7 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images, lastMov
     turnColour = colourToNumber[turnColour]
     turnColour /= -1
     return None, pieceList, turnColour, lastMoveEnPassant
-  except Exception as e:
-    print(e)
+  except:
     return None, pieceList, colourToNumber[turnColour], lastMoveEnPassant
 
 def game_loop(pieceList, images, lastMoveEnPassant):
