@@ -17,6 +17,9 @@ class Piece:
 
   def get_piece_type(self):
     return self.pieceType
+  
+  def get_en_passant(self):
+    return self.enPassant
 
 class Pawn(Piece):
   val = 1
@@ -31,9 +34,6 @@ class Pawn(Piece):
 
   def get_value(self):
     return Pawn.val
-
-  def get_en_passant(self):
-    return self.enPassant
 
   def movement(self, position, lastMoveEnPassant):
     if position[0] - self.position[0] == 0 and not self.hasMoved and (self.position[1] - position[1] == -2 and self.get_colour() == "black"):
@@ -51,17 +51,18 @@ class Pawn(Piece):
             raise ValueError()
       self.position = position
       self.hasMoved = True
-      self.enPassant = False
+      self.enPassant = True
     elif position[0] - self.position[0] == 0 and ((self.position[1] - position[1] == -1 and self.get_colour() == "black") or (self.position[1] - position[1] == 1 and self.get_colour() == "white")):
       for piece in pieceList:
         if piece.get_position() == position:
           raise ValueError("c")
       self.position = position
       self.hasMoved = True
+      self.enPassant = False
     elif self.capture(position, lastMoveEnPassant) == True:
       self.position = position
       self.hasMoved = True
-      self.enPassant
+      self.enPassant = False
     else:
       raise ValueError()
 
@@ -78,8 +79,19 @@ class Pawn(Piece):
         
     
   def en_passant(self, position, lastMoveEnPassant):
-    return False #fix this later
-    
+    if not lastMoveEnPassant:
+      return False
+    elif self.get_colour() == "black" and abs(self.position[0] - position[0]) == 1 and self.position[1] - position[1] == -1 and pieceList[i].get_en_passant() == True:
+      for i in range(len(pieceList)):
+        if pieceList[i].get_colour() != self.get_colour() and pieceList[i].get_position() == (position[0],position[1]-1):
+          pieceList[i].get_captured()
+          return True
+    elif self.get_colour() == "white" and abs(self.position[0] - position[0]) == 1 and self.position[1] - position[1] == 1:
+      for i in range(len(pieceList)):
+        if pieceList[i].get_colour() != self.get_colour() and pieceList[i].get_position() == (position[0], position[1]+1) and pieceList[i].get_en_passant() == True:
+          pieceList[i].get_captured()
+          return True
+    return False
 class Knight(Piece):
   val = 3
   
@@ -89,6 +101,7 @@ class Knight(Piece):
     self.image = pygame.transform.scale(image, (80, 80))
     self.hasMoved = None
     self.pieceType = "knight"
+    self.enPassant = None
 
   def get_value(self):
     return Knight.val
@@ -101,13 +114,14 @@ class Knight(Piece):
     
 class Bishop(Piece):
   val = 3
-  pieceType = "bishop"
   
   def __init__(self, position, image, colour):
     self.colour = colour
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
     self.hasMoved = None
+    self.enPassant = None
+    self.pieceType = "bishop"
 
   def get_value(self):
     return Bishop.val
@@ -144,6 +158,7 @@ class Rook(Piece):
     self.position = position
     self.image = pygame.transform.scale(image, (80, 80))
     self.hasMoved = False
+    self.enPassant = None
     self.pieceType = "rook"
 
   def get_value(self):
@@ -180,6 +195,7 @@ class Queen(Piece):
     self.image = pygame.transform.scale(image, (80, 80))
     self.hasMoved = None
     self.pieceType = "queen"
+    self.enPassant = None
 
   def get_value(self):
     return Queen.val
@@ -234,6 +250,7 @@ class King(Piece):
     self.image = pygame.transform.scale(image, (80, 80))
     self.hasMoved = False
     self.pieceType = "king"
+    self.enPassant = None
 
   def get_value(self):
     return King.val
@@ -428,8 +445,13 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images, lastMov
     oldPos = pieceChosen.get_position()
     if pieceChosen.get_piece_type() != "pawn":
       pieceChosen.movement(chosenSquare)
+      lastMoveEnPassant = False
     else:
       pieceChosen.movement(chosenSquare, lastMoveEnPassant)
+      if abs(chosenSquare[1] - oldPos[1]) == 2:
+        lastMoveEnPassant = True
+      else:
+        lastMoveEnPassant = False
     for piece in pieceList:
       if piece.get_position() == chosenSquare and piece.get_colour() != turnColour:
         piece.get_captured()    
