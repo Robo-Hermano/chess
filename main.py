@@ -464,9 +464,9 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images, lastMov
     if pieceChosen.get_piece_type() == "pawn" and ((turnColour == "white" and chosenSquare[1] == 1) or (turnColour == "black" and chosenSquare[1] == 8)):
       promotedPiece = input("input your promoted piece: ")
       promotedPiece = promotedPiece.lower()
-      if promotedPiece not in ["pawn", "knight","bishop","queen"]:
-        pieceChosen.position = oldPos
-        raise KeyError()
+      while promotedPiece not in ["pawn", "knight","bishop","queen"]:
+        promotedPiece = input("input your promoted piece: ")
+        promotedPiece = promotedPiece.lower()
       else:
         pieceList = promotion(promotedPiece, pieceList, pieceChosen, images)
     turnColour = colourToNumber[turnColour]
