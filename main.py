@@ -289,6 +289,7 @@ class King(Piece):
             piece.position = oldPosition
             self.position = oldPos
             return False
+    self.position = oldPos
     return True
 
   def castling(self, position):
@@ -302,7 +303,7 @@ class King(Piece):
         for piece in pieceList:
           if piece.get_position() == i:
             return False
-          elif piece.get_piece_type() == "rook" and piece.get_position() == (8,8) and piece.get_colour() == "white" and not piece.hasMoved:
+          elif piece.get_piece_type() == "rook" and piece.get_position() == (8,8) and piece.get_colour() == "white" and piece.hasMoved == False:
             rookNotMoved = True
     elif self.get_colour() == "white" and position == (3,8):
       if self.check_for_checks((3,8)) == False or self.check_for_checks((4,8)) == False:
@@ -310,8 +311,9 @@ class King(Piece):
       for i in ((4,8),(3,8),(2,8)):
         for piece in pieceList:
           if piece.get_position() == i:
+            print(i, piece)
             return False
-          elif piece.get_piece_type() == "rook" and piece.get_position() == (1,8) and piece.get_colour() == "white" and not piece.hasMoved:
+          elif piece.get_piece_type() == "rook" and piece.get_position() == (1,8) and piece.get_colour() == "white" and piece.hasMoved == False:
             rookNotMoved = True
     elif self.get_colour() == "black" and position == (7,1):
       if self.check_for_checks((7,1)) == False or self.check_for_checks((6,1)) == False:
@@ -320,7 +322,7 @@ class King(Piece):
         for piece in pieceList:
           if piece.get_position() == i:
             return False
-          elif piece.get_piece_type() == "rook" and piece.get_position() == (8,1) and piece.get_colour() == "black" and not piece.hasMoved:
+          elif piece.get_piece_type() == "rook" and piece.get_position() == (8,1) and piece.get_colour() == "black" and piece.hasMoved == False:
             rookNotMoved = True
     elif self.get_colour() == "black" and position == (3,1):
       if self.check_for_checks((3,1)) == False or self.check_for_checks((4,1)) == False:
@@ -329,7 +331,7 @@ class King(Piece):
         for piece in pieceList:
           if piece.get_position() == i:
             return False
-          elif piece.get_piece_type() == "rook" and piece.get_position() == (1,1) and piece.get_colour() == "black" and not piece.hasMoved:
+          elif piece.get_piece_type() == "rook" and piece.get_position() == (1,1) and piece.get_colour() == "black" and piece.hasMoved == False:
             rookNotMoved = True
     else:
       return False
@@ -470,7 +472,8 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images, lastMov
     turnColour = colourToNumber[turnColour]
     turnColour /= -1
     return None, pieceList, turnColour, lastMoveEnPassant
-  except:
+  except Exception as e:
+    print(e)
     return None, pieceList, colourToNumber[turnColour], lastMoveEnPassant
 
 def game_loop(pieceList, images, lastMoveEnPassant):
