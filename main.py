@@ -454,16 +454,16 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images, lastMov
       if abs(chosenSquare[1] - oldPos[1]) == 2:
         lastMoveEnPassant = True
       else:
-        lastMoveEnPassant = False
-    for piece in pieceList:
-      if piece.get_position() == chosenSquare and piece.get_colour() != turnColour:
-        piece.get_captured()    
+        lastMoveEnPassant = False 
     if pieceChosen.get_colour() == "white" and pieceChosen.get_piece_type() != "king" and pieceList[15].check_for_checks(pieceList[15].get_position()) == False:
       pieceChosen.position = oldPos
       raise KeyError()
     elif pieceChosen.get_colour() == "black" and pieceChosen.get_piece_type() != "king" and pieceList[31].check_for_checks(pieceList[31].get_position()) == False:
       pieceChosen.position = oldPos
       raise KeyError()
+    for piece in pieceList:
+      if piece.get_position() == chosenSquare and piece.get_colour() != turnColour:
+        piece.get_captured()   
     if pieceChosen.get_piece_type() == "pawn" and ((turnColour == "white" and chosenSquare[1] == 1) or (turnColour == "black" and chosenSquare[1] == 8)):
       promotedPiece = input("input your promoted piece: ")
       promotedPiece = promotedPiece.lower()
