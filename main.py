@@ -272,9 +272,10 @@ class King(Piece):
     else:
       raise ValueError()
   
-  def check_for_checks(self, position):
+  def check_for_checks(self, position): #for preventing illegal moves
     oldPos = self.position
     self.position = position
+    #loop to check if any piece of other colour can reach king's current square
     for piece in pieceList:
       check = False
       if piece.get_colour() != self.get_colour() and piece.get_position() != (-1, -1):
