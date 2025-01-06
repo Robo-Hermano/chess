@@ -1,6 +1,6 @@
 import pygame
 
-class Piece:
+class Piece: #parent class, all pieces inherit from it
   def get_captured(self):
     self.position = (-1,-1) #so that the piece won't get printed after getting captured
     
@@ -11,13 +11,13 @@ class Piece:
     return self.colour #so that white player can't move black pieces and vice versa
 
   def get_image(self):
-    return self.image
+    return self.image #for printing image on board
 
   def get_piece_type(self):
-    return self.pieceType
+    return self.pieceType #for more complex code such as castling
   
   def get_en_passant(self):
-    return self.enPassant
+    return self.enPassant #for en passant calculations
 
 class Pawn(Piece):
   val = 1
@@ -31,7 +31,7 @@ class Pawn(Piece):
     self.enPassant = False
 
   def get_value(self):
-    return Pawn.val
+    return Pawn.val #for displaying material difference in chess, haven't implemented it yet
 
   def movement(self, position, lastMoveEnPassant):
     if position[0] - self.position[0] == 0 and not self.hasMoved and (self.position[1] - position[1] == -2 and self.get_colour() == "black"):
@@ -353,6 +353,7 @@ queenImgBlack = pygame.image.load("black_queen.png")
 kingImgWhite = pygame.image.load("white_king.png")
 kingImgBlack = pygame.image.load("black_king.png")
 
+#for usage in promotions
 images = [rookImgWhite, rookImgBlack, knightImgWhite, knightImgBlack, bishopImgWhite, bishopImgBlack, queenImgWhite, queenImgBlack]
 
 #initialising every piece
@@ -390,11 +391,13 @@ BlackBishopTwo = Bishop((6,1),bishopImgBlack, "black")
 BlackQueen = Queen((4,1),queenImgBlack, "black")
 BlackKing = King((5,1),kingImgBlack, "black")
 
+#will loop through this list as it makes adjusting the pieces much easier
 pieceList =[ WhitePawnOne, WhitePawnTwo, WhitePawnThree, WhitePawnFour, WhitePawnFive, WhitePawnSix, WhitePawnSeven, WhitePawnEight, 
              WhiteRookOne, WhiteRookTwo, WhiteKnightOne, WhiteKnightTwo, WhiteBishopOne, WhiteBishopTwo, WhiteQueen, WhiteKing,
              BlackPawnOne, BlackPawnTwo, BlackPawnThree, BlackPawnFour, BlackPawnFive, BlackPawnSix, BlackPawnSeven, BlackPawnEight,
              BlackRookOne, BlackRookTwo, BlackKnightOne, BlackKnightTwo, BlackBishopOne, BlackBishopTwo, BlackQueen, BlackKing
             ]
+
 def promotion(piece, pieceList, pieceChosen, images):
   position = pieceChosen.get_position()
   for i in range(len(pieceList)):
@@ -477,13 +480,15 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images, lastMov
     return None, pieceList, colourToNumber[turnColour], lastMoveEnPassant
 
 def game_loop(pieceList, images, lastMoveEnPassant):
+  #set up the screen
   pygame.init()
   pygame.display.set_caption("2 player chess, stockfish coming soon")
   screen = pygame.display.set_mode((640, 640))
   BROWN = (137, 81, 41)
   WHITE = (255, 255, 255)
+  #set up variables for loop
   loop = True
-  turnColour = 1
+  turnColour = 1 #so turn switches between white and black
   pieceChosen = None
   while loop:
     screen.fill(WHITE)
