@@ -34,14 +34,16 @@ class Pawn(Piece):
     return Pawn.val #for displaying material difference in chess, haven't implemented it yet
 
   def movement(self, position, lastMoveEnPassant):
+    #check moving twice on first turn
     if position[0] - self.position[0] == 0 and not self.hasMoved and (self.position[1] - position[1] == -2 and self.get_colour() == "black"):
       for pos in ((position[0], position[1]),(position[0],position[1]-1)):
         for piece in pieceList:
           if piece.get_position() == pos:
-            raise ValueError()
+            raise ValueError() #checking that no piece is blocking the square
       self.position = position
-      self.hasMoved = True
-      self.enPassant = True
+      self.hasMoved = True #makes sure it can't move two squares again
+      self.enPassant = True #showing it to be eligible to en passant
+    #same thing but for white pawns
     elif position[0] - self.position[0] == 0 and not self.hasMoved and (self.position[1] - position[1] == 2 and self.get_colour() == "white"):
       for pos in ((position[0], position[1]), (position[0],position[1]+1)):
         for piece in pieceList:
@@ -50,6 +52,7 @@ class Pawn(Piece):
       self.position = position
       self.hasMoved = True
       self.enPassant = True
+    #moving one square forwards
     elif position[0] - self.position[0] == 0 and ((self.position[1] - position[1] == -1 and self.get_colour() == "black") or (self.position[1] - position[1] == 1 and self.get_colour() == "white")):
       for piece in pieceList:
         if piece.get_position() == position:
@@ -62,7 +65,7 @@ class Pawn(Piece):
       self.hasMoved = True
       self.enPassant = False
     else:
-      raise ValueError()
+      raise ValueError() #means pawn can't move to chosen square
 
   def capture(self, position, lastMoveEnPassant):
     if self.en_passant(position, lastMoveEnPassant) == True:
