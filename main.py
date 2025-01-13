@@ -30,8 +30,9 @@ class Pawn(Piece):
     self.pieceType = "pawn"
     self.enPassant = False
 
-  def get_value(self):
-    return Pawn.val #for displaying material difference in chess, haven't implemented it yet
+  @classmethod
+  def get_value(cls):
+    return cls.val #for displaying material difference in chess, haven't implemented it yet
 
   def movement(self, position, lastMoveEnPassant):
     #check moving twice on first turn
@@ -104,8 +105,9 @@ class Knight(Piece):
     self.pieceType = "knight"
     self.enPassant = None
 
-  def get_value(self):
-    return Knight.val
+  @classmethod
+  def get_value(cls):
+    return cls.val
 
   def movement(self, position):
     if abs(position[0] - self.position[0]) == 2 and abs(position[1] - self.position[1]) == 1 or abs(position[1] - self.position[1]) == 2 and abs(position[0] - self.position[0]) == 1:
@@ -124,8 +126,9 @@ class Bishop(Piece):
     self.enPassant = None
     self.pieceType = "bishop"
 
-  def get_value(self):
-    return Bishop.val
+  @classmethod
+  def get_value(cls):
+    return cls.val
 
   def check_validity(self, position):
     if self.position[0] - position[0] == self.position[1] - position[1]:
@@ -162,8 +165,9 @@ class Rook(Piece):
     self.enPassant = None
     self.pieceType = "rook"
 
-  def get_value(self):
-    return Rook.val
+  @classmethod
+  def get_value(cls):
+    return cls.val
 
   def check_validity(self, originalPos, NewPos, index):
     C = (NewPos[index]-originalPos[index])/abs(NewPos[index]-originalPos[index])
@@ -198,8 +202,9 @@ class Queen(Piece):
     self.pieceType = "queen"
     self.enPassant = None
 
-  def get_value(self):
-    return Queen.val
+  @classmethod
+  def get_value(cls):
+    return cls.val
   
   def check_validity_diagonal(self, position):
     if self.position[0] - position[0] == self.position[1] - position[1]:
@@ -253,8 +258,9 @@ class King(Piece):
     self.pieceType = "king"
     self.enPassant = None
 
-  def get_value(self):
-    return King.val
+  @classmethod
+  def get_value(cls):
+    return cls.val
 
   def movement(self, position):
     if abs(self.position[0] - position[0]) <= 1 and abs(self.position[1] - position[1]) <= 1 and self.check_for_checks(position) == True:
