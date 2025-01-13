@@ -30,7 +30,7 @@ class Pawn(Piece):
     self.pieceType = "pawn"
     self.enPassant = False
 
-  @classmethod
+  @classmethod #decorator to show this is class method and not instance
   def get_value(cls):
     return cls.val #for displaying material difference in chess, haven't implemented it yet
 
