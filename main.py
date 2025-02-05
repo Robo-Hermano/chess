@@ -485,8 +485,7 @@ def take_turn(turnColour, mousePosition, pieceChosen, pieceList, images, lastMov
     turnColour = colourToNumber[turnColour]
     turnColour /= -1
     return None, pieceList, turnColour, lastMoveEnPassant
-  except Exception as e:
-    print(e)
+  except:
     return None, pieceList, colourToNumber[turnColour], lastMoveEnPassant
 
 def game_loop(pieceList, images, lastMoveEnPassant):
